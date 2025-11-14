@@ -25,14 +25,14 @@ const Skills = () => {
               {category.title}
             </h3>
 
-            {/* Scrolling Row */}
-            <div className="relative w-full overflow-hidden">
+            {/* Horizontal Scroll + Infinite Auto-Scroll */}
+            <div className="relative w-full overflow-x-scroll overflow-y-hidden scrollbar-hide cursor-grab active:cursor-grabbing">
               <div
                 className={`flex gap-8 whitespace-nowrap ${
                   index % 2 === 0 ? "animate-scroll" : "animate-scroll-reverse"
                 }`}
               >
-                {/* Duplicate items for infinite loop effect */}
+                {/* Duplicate items for infinite scrolling effect */}
                 {[...category.skills, ...category.skills].map((skill, i) => (
                   <div
                     key={i}
