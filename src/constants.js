@@ -34,7 +34,7 @@ import renderLogo from './assets/tech_logo/render_logo.png'
 
 import mnnitLogo from './assets/education_logo/mnnitLogo.jpg'
 import sunbeamLogo from './assets/education_logo/sunbeamLogo.png'
-import stthomasLogo from './assets/education_logo/stthomasLogo.jpg'
+import stthomasLogo from './assets/education_logo/stThomasLogo.jpg'
 // Project Section Logo's
 import realestateLogo from './assets/work_logo/realStateLogo.png'
 import lmsLogo from './assets/work_logo/lmsLogo.png'
