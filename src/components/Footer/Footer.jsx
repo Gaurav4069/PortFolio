@@ -29,7 +29,7 @@ const Footer = () => {
     <footer className="py-20 px-6 border-t border-white/5 relative bg-slate-950/80 backdrop-blur-md">
       <div className="container mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row justify-between items-center gap-12">
-          
+
           {/* Brand Side */}
           <div className="space-y-6 text-center md:text-left">
             <h2 className="text-3xl font-black text-white tracking-tighter">
@@ -40,10 +40,10 @@ const Footer = () => {
             </p>
             <div className="flex justify-center md:justify-start gap-4">
               {socialItems.map((item, idx) => (
-                <a 
-                  key={idx} 
-                  href={item.link} 
-                  target="_blank" 
+                <a
+                  key={idx}
+                  href={item.link}
+                  target="_blank"
                   className="p-3 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/5 transition-all duration-300"
                 >
                   {item.icon}
@@ -59,7 +59,7 @@ const Footer = () => {
               <ul className="space-y-4">
                 {navItems.map((item, idx) => (
                   <li key={idx}>
-                    <button 
+                    <button
                       onClick={() => scrollTo(item.id)}
                       className="text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors"
                     >
