@@ -19,7 +19,8 @@ const BlurBlob = ({ position, size }) => {
       }}
     >
       <div
-        className="w-full h-full bg-purple-500 rounded-full opacity-20 blur-3xl animate-blob"
+        className="w-full h-full rounded-full opacity-70 blur-3xl animate-blob mix-blend-screen
+        bg-[radial-gradient(circle_at_top,rgba(192,132,252,0.95),transparent_55%),radial-gradient(circle_at_bottom,rgba(56,189,248,0.9),transparent_55%)]"
       ></div>
     </div>
   );

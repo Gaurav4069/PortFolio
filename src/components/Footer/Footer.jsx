@@ -1,79 +1,99 @@
 import React from "react";
-import {
-  FaFacebook,
-  FaTwitter,
-  FaLinkedin,
-  FaInstagram,
-  FaYoutube,
-  FaGithub,
-} from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FiGithub, FiLinkedin, FiTwitter, FiInstagram } from "react-icons/fi";
 
 const Footer = () => {
-  // Smooth scroll function
-  const handleScroll = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
+  const navItems = [
+    { name: "About", id: "about" },
+    { name: "Skills", id: "skills" },
+    { name: "Projects", id: "work" },
+    { name: "Education", id: "education" },
+    { name: "Contact", id: "contact" },
+  ];
+
+  const socialItems = [
+    { icon: <FiGithub size={20} />, link: "https://github.com/Gaurav4069" },
+    { icon: <FiLinkedin size={20} />, link: "https://linkedin.com" },
+    { icon: <FiTwitter size={20} />, link: "#" },
+    { icon: <FiInstagram size={20} />, link: "#" },
+  ];
+
   return (
-    <footer className="text-white py-10 px-[12vw] md:px-[7vw] lg:px-[20vw] 
-        bg-gradient-to-b from-[#07102d] via-[#0a1440] to-[#050a1a] border-t border-blue-800 shadow-[0_0_20px_rgba(30,64,175,0.4)]">
-      <div className="container mx-auto text-center">
-        
-        {/* Name */}
-        <h2 className="text-xl font-semibold text-blue-400 tracking-wider drop-shadow-lg">
-          Gaurav Singh
-        </h2>
+    <footer className="py-20 px-6 border-t border-white/5 relative bg-slate-950/80 backdrop-blur-md">
+      <div className="container mx-auto max-w-6xl">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-12">
+          
+          {/* Brand Side */}
+          <div className="space-y-6 text-center md:text-left">
+            <h2 className="text-3xl font-black text-white tracking-tighter">
+              GS<span className="text-blue-500">.</span>
+            </h2>
+            <p className="max-w-xs text-slate-400 text-sm leading-relaxed">
+              Crafting premium digital experiences with a focus on UI excellence and technical performance.
+            </p>
+            <div className="flex justify-center md:justify-start gap-4">
+              {socialItems.map((item, idx) => (
+                <a 
+                  key={idx} 
+                  href={item.link} 
+                  target="_blank" 
+                  className="p-3 rounded-2xl bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/5 transition-all duration-300"
+                >
+                  {item.icon}
+                </a>
+              ))}
+            </div>
+          </div>
 
-        {/* Navigation */}
-        <nav className="flex flex-wrap justify-center space-x-4 sm:space-x-6 mt-4">
-          {[
-            { name: "About", id: "about" },
-            { name: "Skills", id: "skills" },
-            { name: "Projects", id: "projects" },
-            { name: "Education", id: "education" },
-          ].map((item, index) => (
-            <button
-              key={index}
-              onClick={() => handleScroll(item.id)}
-              className="hover:text-blue-400 text-sm sm:text-base my-1 transition-colors"
-            >
-              {item.name}
-            </button>
-          ))}
-        </nav>
+          {/* Nav Side */}
+          <div className="grid grid-cols-2 gap-12 sm:gap-24">
+            <div className="space-y-6">
+              <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Navigation</h4>
+              <ul className="space-y-4">
+                {navItems.map((item, idx) => (
+                  <li key={idx}>
+                    <button 
+                      onClick={() => scrollTo(item.id)}
+                      className="text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors"
+                    >
+                      {item.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="space-y-6">
+              <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Legal</h4>
+              <ul className="space-y-4">
+                <li><a href="#" className="text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors">Terms of Service</a></li>
+              </ul>
+            </div>
+          </div>
 
-        {/* Social Media */}
-        <div className="flex flex-wrap justify-center space-x-5 mt-6">
-          {[
-            {
-              icon: <FaLinkedin />,
-              link: "https://www.linkedin.com/in/gaurav-singh-859578270",
-            },
-            { icon: <FaGithub />, link: "https://github.com/Gaurav4069" },
-          ].map((item, index) => (
-            <a
-              key={index}
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-2xl text-gray-300 hover:text-blue-400 transition-transform transform hover:scale-110 
-              drop-shadow-[0_0_10px_rgba(59,130,246,0.4)]"
-            >
-              {item.icon}
-            </a>
-          ))}
         </div>
 
-        {/* Copyright */}
-        <p className="text-sm text-gray-400 mt-6 tracking-wide">
-          © 2025 Gaurav Singh • All rights reserved.
-        </p>
+        {/* Bottom Bar */}
+        <div className="mt-20 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-slate-500 font-medium">
+            © 2026 Gaurav Singh. All rights reserved.
+          </p>
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Available for hire</span>
+          </div>
+        </div>
       </div>
     </footer>
   );
 };
 
 export default Footer;
+

@@ -1,149 +1,115 @@
 import React, { useState, useEffect } from "react";
-import { FiMenu, FiX } from "react-icons/fi";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiMenu, FiX, FiGithub, FiLinkedin } from "react-icons/fi";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  // Detect scroll and change navbar background
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Smooth scroll function
-  const handleMenuItemClick = (sectionId) => {
-    setActiveSection(sectionId);
-    setIsOpen(false);
-
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const menuItems = [
+    { id: "hero", label: "Home" },
     { id: "about", label: "About" },
     { id: "skills", label: "Skills" },
     { id: "work", label: "Projects" },
     { id: "education", label: "Education" },
   ];
 
+  const scrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setIsOpen(false);
+    }
+  };
+
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition duration-300 px-[7vw] md:px-[7vw] lg:px-[20vw] ${
-        isScrolled
-          ? "bg-[#020617]/70 backdrop-blur-lg shadow-md border-b border-blue-500/20"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="text-white py-5 flex justify-between items-center">
+    <nav className="fixed top-0 w-full z-[100] px-6 py-6 pointer-events-none">
+      <div className="max-w-4xl mx-auto flex items-center justify-between pointer-events-auto">
         {/* Logo */}
-        <div className="text-lg font-semibold cursor-pointer select-none">
-          <span className="text-[#2563eb]">&lt;</span>
-          <span className="text-white">Gaurav</span>
-          <span className="text-[#2563eb]">/</span>
-          <span className="text-white">Singh</span>
-          <span className="text-[#2563eb]">&gt;</span>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400 cursor-pointer"
+          onClick={() => scrollTo("hero")}
+        >
+          GS.
+        </motion.div>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-8 text-gray-300 font-medium">
+        {/* Desktop Pill */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`hidden md:flex items-center gap-1 p-1.5 rounded-full border transition-all duration-500 ${
+            scrolled 
+              ? "bg-slate-900/80 border-white/10 backdrop-blur-xl shadow-2xl shadow-black/50" 
+              : "bg-white/5 border-white/5 backdrop-blur-sm"
+          }`}
+        >
           {menuItems.map((item) => (
-            <li
+            <button
               key={item.id}
-              className={`cursor-pointer transition-colors duration-200 hover:text-[#3b82f6] ${
-                activeSection === item.id ? "text-[#3b82f6]" : ""
-              }`}
+              onClick={() => scrollTo(item.id)}
+              className="px-5 py-2 text-sm font-medium text-slate-300 hover:text-white transition-colors rounded-full hover:bg-white/10"
             >
-              <button onClick={() => handleMenuItemClick(item.id)}>
-                {item.label}
-              </button>
-            </li>
+              {item.label}
+            </button>
           ))}
-        </ul>
+        </motion.div>
 
-        {/* Social Icons */}
-        <div className="hidden md:flex space-x-4">
-          <a
-            href="https://github.com/Gaurav4069"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-300 hover:text-[#3b82f6] transition-transform duration-200 hover:scale-110"
+        {/* Socials & Mobile Toggle */}
+        <div className="flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3">
+            <a href="https://github.com/Gaurav4069" target="_blank" className="p-2 text-slate-400 hover:text-white transition-colors">
+              <FiGithub size={20} />
+            </a>
+            <a href="https://linkedin.com" target="_blank" className="p-2 text-slate-400 hover:text-white transition-colors">
+              <FiLinkedin size={20} />
+            </a>
+          </div>
+          
+          <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-full bg-white/5 border border-white/10 text-slate-200"
           >
-            <FaGithub size={24} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/gaurav-singh-859578270"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-300 hover:text-[#3b82f6] transition-transform duration-200 hover:scale-110"
-          >
-            <FaLinkedin size={24} />
-          </a>
-        </div>
-
-        {/* Mobile Menu Icon */}
-        <div className="md:hidden">
-          {isOpen ? (
-            <FiX
-              className="text-3xl text-[#3b82f6] cursor-pointer"
-              onClick={() => setIsOpen(false)}
-            />
-          ) : (
-            <FiMenu
-              className="text-3xl text-[#3b82f6] cursor-pointer"
-              onClick={() => setIsOpen(true)}
-            />
-          )}
+            {isOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu Items */}
-      {isOpen && (
-        <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-4/5 bg-[#020617]/80 backdrop-blur-lg border border-blue-500/20 z-50 rounded-lg shadow-xl md:hidden">
-          <ul className="flex flex-col items-center space-y-4 py-5 text-gray-300 font-medium">
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="absolute top-24 left-6 right-6 p-6 rounded-3xl bg-slate-900/95 border border-white/10 backdrop-blur-2xl md:hidden flex flex-col gap-4 pointer-events-auto shadow-2xl"
+          >
             {menuItems.map((item) => (
-              <li
+              <button
                 key={item.id}
-                className={`cursor-pointer transition-colors duration-200 hover:text-[#3b82f6] ${
-                  activeSection === item.id ? "text-[#3b82f6]" : ""
-                }`}
+                onClick={() => scrollTo(item.id)}
+                className="text-left px-4 py-3 text-lg font-semibold text-slate-200 border-b border-white/5 last:border-0"
               >
-                <button onClick={() => handleMenuItemClick(item.id)}>
-                  {item.label}
-                </button>
-              </li>
+                {item.label}
+              </button>
             ))}
-            <div className="flex space-x-4 pt-2">
-              <a
-                href="https://github.com/codingmastr"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-[#3b82f6] transition-transform duration-200 hover:scale-110"
-              >
-                <FaGithub size={24} />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/tarun-kaushik-553b441a4"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-[#3b82f6] transition-transform duration-200 hover:scale-110"
-              >
-                <FaLinkedin size={24} />
-              </a>
+            <div className="flex gap-6 pt-4 px-4">
+              <a href="https://github.com/Gaurav4069" target="_blank" className="text-slate-400 hover:text-white"><FiGithub size={24} /></a>
+              <a href="#" target="_blank" className="text-slate-400 hover:text-white"><FiLinkedin size={24} /></a>
             </div>
-          </ul>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
 
 export default Navbar;
+
